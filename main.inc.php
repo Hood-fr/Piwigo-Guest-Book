@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: GuestBook
-Version: auto
+Version: 1.3.1
 Description: Add a guestbook to the gallery
-Plugin URI: auto
+Plugin URI: http://piwigo.org/ext/extension_view.php?eid=609
 Author: Mistic
 Author URI: http://www.strangeplanet.fr
 */
