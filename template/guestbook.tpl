@@ -42,7 +42,7 @@
 
   jQuery('#website').on('blur', function() {ldelim}
     var val = $(this).val();
-    if (val.substr(0, 4) != 'http') {ldelim}
+    if (val.substr(0, 4) != 'http' && val!='') {ldelim}
       $(this).val('http://'+ val);
     }
   });
