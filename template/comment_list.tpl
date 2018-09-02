@@ -49,6 +49,11 @@
         <input type="hidden" name="pwg_token" value="{$comment.PWG_TOKEN}">
         <input type="hidden" name="image_id" value="{$comment.IMAGE_ID|@default:$current.id}">
         <input type="submit" value="{'Submit'|translate}">
+        {if isset($comment.U_CANCEL)}
+         <a href="{$comment.U_CANCEL}">
+         {'Cancel'|translate}
+         </a>
+      {/if}
       </p>
     </form>
     {else}

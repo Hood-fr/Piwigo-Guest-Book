@@ -114,7 +114,8 @@
     {/if}
     
     <div class="col-100">
-      <input type="submit" value="{'Send'|translate}"> 
+      <input type="submit" value="{'Send'|translate}">
+      <a href="{GUESTBOOK_URL}">{'Cancel'|translate}</a><br>
       {'* : mandatory fields'|translate}
     </div>
     
