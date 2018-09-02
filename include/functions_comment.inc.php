@@ -202,7 +202,7 @@ INSERT INTO '.GUESTBOOK_TABLE.'(
       {
         $keyargs_content[] = get_l10n_args('', '');
         $keyargs_content[] = get_l10n_args('(!) This comment requires validation', '');
-        $keyargs_content[] = get_l10n_args(($spam_feedback=='spam' ? '(AKISMET)':'')),
+        $keyargs_content[] = get_l10n_args(($spam_feedback=='spam' ? '(AKISMET)':''));
       }
 
       pwg_mail_notification_admins(
