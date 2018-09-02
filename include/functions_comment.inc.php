@@ -183,7 +183,9 @@ INSERT INTO '.GUESTBOOK_TABLE.'(
     $comm['id'] = pwg_db_insert_id(GUESTBOOK_TABLE);
 
     if ( ($conf['guestbook']['email_admin_on_comment'] and 'validate' == $comment_action)
-        or ($conf['guestbook']['email_admin_on_comment_validation'] and 'moderate' == $comment_action))
+        or ($conf['guestbook']['email_admin_on_comment_validation'] and 'moderate' == $comment_action)
+	or 'moderate-spam' == $comment_action
+        )
     {
       include_once(PHPWG_ROOT_PATH.'include/functions_mail.inc.php');
 
@@ -196,10 +198,11 @@ INSERT INTO '.GUESTBOOK_TABLE.'(
         get_l10n_args('Manage this user comment: %s', $comment_url)
       );
 
-      if ('moderate' == $comment_action)
+      if ('moderate' == $comment_action or 'moderate-spam' == $comment_action)
       {
         $keyargs_content[] = get_l10n_args('', '');
         $keyargs_content[] = get_l10n_args('(!) This comment requires validation', '');
+        $keyargs_content[] = get_l10n_args(($spam_feedback=='spam' ? '(AKISMET)':'')),
       }
 
       pwg_mail_notification_admins(
@@ -278,7 +281,9 @@ $user_where_clause.'
     $result = pwg_query($query);
     
     // mail admin and ask to validate the comment
-    if ($result and $conf['guestbook']['email_admin_on_comment_validation'] and 'moderate' == $comment_action) 
+    if ($result and $conf['guestbook']['email_admin_on_comment_validation'] and 'moderate' == $comment_action
+        or 'moderate-spam' == $comment_action
+        )
     {
       include_once(PHPWG_ROOT_PATH.'include/functions_mail.inc.php');
       
@@ -291,6 +296,7 @@ $user_where_clause.'
         get_l10n_args('Manage this user comment: %s', $comment_url),
         get_l10n_args('', ''),
         get_l10n_args('(!) This comment requires validation', ''),
+        get_l10n_args(($spam_feedback=='spam' ? '(AKISMET)':'')),
       );
 
       pwg_mail_notification_admins(
