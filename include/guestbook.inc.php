@@ -191,12 +191,13 @@ SELECT
     validated,
     website,
     rate,
-    email
+    email,
+    spam_feedback
   FROM '.GUESTBOOK_TABLE.' AS com
   LEFT JOIN '.USERS_TABLE.' AS u
     ON u.'.$conf['user_fields']['id'].' = author_id
   WHERE '.implode(' AND ', $where_clauses).'
-  ORDER BY date DESC
+  ORDER BY spam_feedback DESC, date DESC
   LIMIT '.$conf['guestbook']['nb_comment_page'].' OFFSET '.$page['start'].'
 ;';
   $result = pwg_query( $query );
@@ -222,8 +223,10 @@ SELECT
       'DATE' => format_date($row['date'], true),
       'CONTENT' => trigger_change('render_comment_content', $row['content'], 'guestbook'),
       'WEBSITE' => $row['website'],
+      'IS_PENDING' => ('false' == $row['validated']),
+      'IS_SPAM' => ('spam' == $row['spam_feedback']),
       );
-      
+
     if ($conf['guestbook']['activate_rating'])
     {
       $tpl_comment['STARS'] = get_stars($row['rate'], get_root_url().GUESTBOOK_PATH .'template/jquery.raty/');

@@ -140,7 +140,16 @@ SELECT COUNT(1) FROM '.GUESTBOOK_TABLE.'
 
   if ($comment_action!='reject')
   {
-    $query = '
+      if (substr_compare($comment_action,'spam',strlen($comment_action)-4)==0)
+      {
+          $spam_feedback='spam';
+      }
+      else
+    {
+          $spam_feedback='ham';
+      }
+
+      $query = '
 INSERT INTO '.GUESTBOOK_TABLE.'(
     author, 
     author_id, 
@@ -151,7 +160,8 @@ INSERT INTO '.GUESTBOOK_TABLE.'(
     validation_date, 
     website, 
     rate, 
-    email
+    email,
+    spam_feedback
   )
   VALUES (
     \''.$comm['author'].'\',
@@ -163,7 +173,8 @@ INSERT INTO '.GUESTBOOK_TABLE.'(
     '.($comment_action=='validate' ? 'NOW()':'NULL').',
     '.(!empty($comm['website']) ? '\''.$comm['website'].'\'' : 'NULL').',
     '.(!empty($comm['rate']) ? $comm['rate'] : 'NULL').',
-    '.(!empty($comm['email']) ? '\''.$comm['email'].'\'' : 'NULL').'
+    '.(!empty($comm['email']) ? '\''.$comm['email'].'\'' : 'NULL').',
+    \''.($spam_feedback=='spam' ? 'spam':'ham').'\'
   )
 ';
 
@@ -197,6 +208,10 @@ INSERT INTO '.GUESTBOOK_TABLE.'(
       );
     }
   }
+
+if ($comment_action == 'moderate-spam'){
+     $comment_action = 'moderate';
+ }
   
   return $comment_action;
 }
@@ -220,8 +235,28 @@ function update_user_comment_guestbook($comment, $post_key)
     $comment_action='moderate';
   }
 
-  if ($comment_action!='reject')
+  // perform more spam check
+  $comment_action =
+    trigger_change('user_comment_check',
+      $comment_action,
+      array_merge($comment,
+            array('author' => $GLOBALS['user']['username'])
+            ),
+      'guestbook'
+      );
+
+    if ($comment_action!='reject')
   {
+      if (substr_compare($comment_action,'spam',strlen($comment_action)-4)==0)
+      {
+          $spam_feedback='spam';
+      }
+      else{
+          $spam_feedback='ham';
+      }
+
+echo 'feedback :'.$spam_feedback;
+
     $user_where_clause = '';
     if (!is_admin())
     {
@@ -232,8 +267,11 @@ function update_user_comment_guestbook($comment, $post_key)
     $query = '
 UPDATE '.GUESTBOOK_TABLE.'
   SET content = \''.$comment['content'].'\',
+      '.(!empty($comm['website']) ? 'website = \''.$comm['website'].'\'' : 'NULL').',
+      '.(!empty($comm['rate']) ? ' rate = '.$comm['rate'] : 'NULL').',
       validated = \''.($comment_action=='validate' ? 'true':'false').'\',
-      validation_date = '.($comment_action=='validate' ? 'NOW()':'NULL').'
+      validation_date = '.($comment_action=='validate' ? 'NOW()':'NULL').',
+      spam_feedback = \''.($spam_feedback=='spam' ? 'spam':'ham').'\',
   WHERE id = '.$comment['comment_id'].
 $user_where_clause.'
 ;';
@@ -261,7 +299,11 @@ $user_where_clause.'
       );
     }
   }
-  
+
+ if ($comment_action == 'moderate-spam'){
+     $comment_action = 'moderate';
+ }
+
   return $comment_action;
 }
 
@@ -314,6 +356,9 @@ DELETE FROM '.GUESTBOOK_TABLE.'
   WHERE '.$where_clause.
 $user_where_clause.'
 ;';
+
+  trigger_notify('user_comment_deletion', $comment_id, 'guestbook');// trigger is but before submitting the query in order to be able to submit spam to askimet plugin before removing the comment
+
   pwg_query($query);
 }
 
@@ -335,4 +380,7 @@ UPDATE '.GUESTBOOK_TABLE.'
   WHERE '.$where_clause.'
 ;';
   pwg_query($query);
+
+  trigger_notify('user_comment_validation', $comment_id, 'guestbook');
+
 }

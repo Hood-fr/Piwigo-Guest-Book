@@ -93,7 +93,17 @@
     
     <div class="col-100">
       <label for="contentid">{'Comment'|translate}* :</label>
-      <textarea name="content" id="contentid" rows="7">{$comment_add.CONTENT}</textarea>
+      <textarea name="content" id="contentid" rows="7">{$comment_add.CONTENT}
+      {if isset($comment_add.IS_SPAM)}
+          {if $comment_add.IS_SPAM}
+              {if isset($comment_add.IS_PENDING)}
+                  {if $comment_add.IS_PENDING}
+                      <br>********* {'Suspected_Spam'|@translate} *********<br>
+                  {/if}
+              {/if}
+          {/if}
+      {/if}
+      </textarea>
     </div>
     
     {if isset($CRYPTO)}

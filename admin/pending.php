@@ -57,12 +57,13 @@ SELECT
     c.content,
     c.website,
     c.email,
-    c.rate
+    c.rate,
+    c.spam_feedback
   FROM '.GUESTBOOK_TABLE.' AS c
     LEFT JOIN '.USERS_TABLE.' AS u
       ON u.'.$conf['user_fields']['id'].' = c.author_id
   WHERE validated = \'false\'
-  ORDER BY c.date DESC
+  ORDER BY c.spam_feedback DESC, c.date DESC
 ;';
 $result = pwg_query($query);
 
@@ -89,6 +90,8 @@ while ($row = pwg_db_fetch_assoc($result))
       'WEBSITE_NAME' => preg_replace('#^(https?:\/\/)#i', null, $row['website']),
       'STARS' => get_stars($row['rate'], GUESTBOOK_PATH .'template/jquery.raty/'),
       'RATE' => $row['rate'],
+      'IS_PENDING' => 'true',
+      'IS_SPAM' => ('spam' == $row['spam_feedback']),
       )
     );
 
