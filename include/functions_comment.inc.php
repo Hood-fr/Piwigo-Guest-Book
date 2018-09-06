@@ -156,6 +156,8 @@ SELECT COUNT(1) FROM '.GUESTBOOK_TABLE.'
     {
           $spam_feedback='ham';
       }
+      
+      $comm['user_agent']=isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 
       $query = '
 INSERT INTO '.GUESTBOOK_TABLE.'(
@@ -169,7 +171,8 @@ INSERT INTO '.GUESTBOOK_TABLE.'(
     website, 
     rate, 
     email,
-    spam_feedback
+    spam_feedback,
+    user_agent
   )
   VALUES (
     \''.$comm['author'].'\',
@@ -182,7 +185,8 @@ INSERT INTO '.GUESTBOOK_TABLE.'(
     '.(!empty($comm['website']) ? '\''.$comm['website'].'\'' : 'NULL').',
     '.(!empty($comm['rate']) ? $comm['rate'] : 'NULL').',
     '.(!empty($comm['email']) ? '\''.$comm['email'].'\'' : 'NULL').',
-    \''.($spam_feedback=='spam' ? 'spam':'ham').'\'
+    \''.($spam_feedback=='spam' ? 'spam':'ham').'\',
+    \''.$comm['user_agent'].'\'    
   )
 ';
 
@@ -265,6 +269,8 @@ function update_user_comment_guestbook($comment, $post_key)
       else{
           $spam_feedback='ham';
       }
+      
+    $comm['user_agent']=isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 
     $user_where_clause = '';
     if (!is_admin())
@@ -281,6 +287,7 @@ UPDATE '.GUESTBOOK_TABLE.'
       validated = \''.($comment_action=='validate' ? 'true':'false').'\',
       validation_date = '.($comment_action=='validate' ? 'NOW()':'NULL').',
       spam_feedback = \''.($spam_feedback=='spam' ? 'spam':'ham').'\',
+      user_agent = \''.$comment['user_agent'].'\',
   WHERE id = '.$comment['comment_id'].
 $user_where_clause.'
 ;';
