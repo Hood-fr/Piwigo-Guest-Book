@@ -100,6 +100,14 @@ SELECT COUNT(*) AS user_exists
       $comment_action='reject';
     }
   }
+  //if the website field is empty, the content is scanned for urls. The first result is then used as a website url (useful for spam detection)
+  else{
+      preg_match_all('#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#', $comm['content'], $match);
+      if(!empty($match[0]))
+      {
+          $comm['website']=$match[0][0];
+      }      
+  }
   
   // anonymous id = ip address
   $ip_components = explode('.', $_SERVER["REMOTE_ADDR"]);
