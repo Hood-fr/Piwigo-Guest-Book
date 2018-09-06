@@ -266,8 +266,6 @@ function update_user_comment_guestbook($comment, $post_key)
           $spam_feedback='ham';
       }
 
-echo 'feedback :'.$spam_feedback;
-
     $user_where_clause = '';
     if (!is_admin())
     {
