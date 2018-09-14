@@ -81,6 +81,23 @@ if (isset($_GET['action']))
 
       redirect($url_self);
     }
+    case 'submit_spam_comment' :
+    {
+      check_pwg_token();
+
+      include_once(GUESTBOOK_PATH.'include/functions_comment.inc.php');
+
+      check_input_parameter('comment_to_submit', $_GET, false, PATTERN_ID);
+
+      $author_id = get_comment_author_id_guestbook($_GET['comment_to_submit']);
+
+      if (can_manage_comment('delete', $author_id))
+      {
+        submit_spam_comment_guestbook($_GET['comment_to_submit']);
+      }
+
+      redirect($url_self);
+    }
     case 'validate_comment' :
     {
       check_pwg_token();
@@ -244,6 +261,14 @@ SELECT
         array(
           'action'=>'delete_comment',
           'comment_to_delete'=>$row['id'],
+          'pwg_token' => get_pwg_token(),
+          )
+        );
+      $tpl_comment['U_SUBMITSPAM'] = add_url_params(
+        $url_self,
+        array(
+          'action'=>'submit_spam_comment',
+          'comment_to_submit'=>$row['id'],
           'pwg_token' => get_pwg_token(),
           )
         );

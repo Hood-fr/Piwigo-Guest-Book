@@ -374,10 +374,18 @@ DELETE FROM '.GUESTBOOK_TABLE.'
 $user_where_clause.'
 ;';
 
-  trigger_notify('user_comment_deletion', $comment_id, 'guestbook');// trigger is but before submitting the query in order to be able to submit spam to askimet plugin before removing the comment
+  trigger_notify('user_comment_deletion', $comment_id, 'guestbook');
 
   pwg_query($query);
 }
+
+function submit_spam_comment_guestbook($comment_id)
+{
+    trigger_notify('comment_spam_submission', $comment_id);
+    delete_user_comment_guestbook($comment_id);
+    return false;
+}
+
 
 function validate_user_comment_guestbook($comment_id)
 {

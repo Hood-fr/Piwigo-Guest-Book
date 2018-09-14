@@ -9,6 +9,12 @@
         {'Delete'|translate}
       </a>{if isset($comment.U_VALIDATE) or isset($comment.U_EDIT) or isset($comment.U_CANCEL)} | {/if}
     {/if}
+    {if isset($comment.U_SUBMITSPAM)}
+            <a href="{$comment.U_SUBMITSPAM}" title="{'report spam'|@translate}">
+                    {'report spam'|translate}
+            </a>{if isset($comment.U_VALIDATE) or isset($comment.U_EDIT) or isset($comment.U_CANCEL)} | {/if}
+    {/if}
+
     {if isset($comment.U_CANCEL)}
       <a href="{$comment.U_CANCEL}">
         {'Cancel'|translate}
