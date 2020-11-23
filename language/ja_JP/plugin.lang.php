@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | Piwigo - a PHP based photo gallery                                    |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2008-2012 Piwigo Team                  http://piwigo.org |
+// | Copyright(C) 2008-2017 Piwigo Team                  http://piwigo.org |
 // | Copyright(C) 2003-2008 PhpWebGallery Team    http://phpwebgallery.net |
 // | Copyright(C) 2002-2003 Pierrick LE GALL   http://le-gall.net/pierrick |
 // +-----------------------------------------------------------------------+
@@ -20,21 +20,21 @@
 // | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
-$lang['%s says on %s :'] = '%s schreef het volgende op %s:';
-$lang['* : mandatory fields'] = '* : verplicht veld';
-$lang['Activate rating'] = 'Activeer waardering';
-$lang['GuestBook'] = 'Gastenboek';
-$lang['Please enter your username'] = 'Geef aub uw gebruikersnaam';
-$lang['Sign the guestbook'] = 'Teken het gastenboek';
-$lang['There are %d messages'] = 'Er zijn %d berichten';
-$lang['Website'] = 'Website';
-$lang['invalid website address'] = 'Ongeldig website-adres';
-$lang['not publicly visible'] = 'niet openbaar zichtbaar';
-$lang['Please enter a message'] = 'Maak aub een bericht';
-$lang['Please enter your e-mail'] = 'Geef aub uw email-adres';
-$lang['Guests (not registered) permissions :'] = 'Rechten van gasten (niet geregistreerd)';
-$lang['add comment'] = 'geef commentaar';
-$lang['view comments'] = 'bekijk commentaar';
-$lang['Rate'] = 'Waarderen';
-$lang['Send'] = 'Verstuur';
-$lang['Add link in menu'] = 'Voeg link aan menu toe';
+$lang['not publicly visible'] = '公には見えない';
+$lang['* : mandatory fields'] = '*: 必須項目です';
+$lang['Activate rating'] = 'レーティングを有効化する';
+$lang['Add link in menu'] = 'メニューにリンクを追加する';
+$lang['GuestBook'] = 'ゲストブック';
+$lang['Guests (not registered) permissions :'] = '（登録済みでない）ゲストの権限：';
+$lang['Please enter a message'] = 'メッセージを入力して下さい';
+$lang['Please enter your e-mail'] = 'あなたのメールアドレスを入力して下さい';
+$lang['Please enter your username'] = 'あなたのユーザ名を入力して下さい';
+$lang['Rate'] = 'レート';
+$lang['Send'] = '送信する';
+$lang['Sign the guestbook'] = 'ゲストブックにサインする';
+$lang['There are %d messages'] = '%d個のメッセージがあります';
+$lang['Website'] = 'ウェブサイト';
+$lang['add comment'] = 'コメントを追加する';
+$lang['invalid website address'] = '無効なウェブサイトアドレス';
+$lang['view comments'] = 'コメントを見る';
+$lang['%s says on %s :'] = '%s は %s で言う。';
