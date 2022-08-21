@@ -1,11 +1,12 @@
 <?php
 /*
 Plugin Name: GuestBook
-Version: 1.4.0
+Version: 1.5
 Description: Add a guestbook to the gallery
 Plugin URI: http://piwigo.org/ext/extension_view.php?eid=609
 Author: Mistic
 Author URI: http://www.strangeplanet.fr
+Has Settings: true
 */
 
 defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
