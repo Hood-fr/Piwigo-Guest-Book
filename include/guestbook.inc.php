@@ -253,6 +253,9 @@ SELECT
     {
       $tpl_comment['EMAIL'] = $row['email'];
     }
+    else {
+      $tpl_comment['EMAIL'] = '';
+    }
 
     if (can_manage_comment('delete', $row['author_id']))
     {
