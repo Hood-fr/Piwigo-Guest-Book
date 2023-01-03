@@ -21,8 +21,10 @@
   var content = new LiveValidation('contentid', {ldelim} onlyOnSubmit: true });
   content.add(Validate.Presence, {ldelim} failureMessage: "{'Please enter a message'|translate}" });
   
-  {if $themeconf.mobile}
+  {if !empty($themeconf.mobile)}
+      {if $themeconf.mobile}
   var width = $(document).width()-30;
+      {/if}
   {else}
   var width = jQuery('#guestbookAdd').parent().width();
   {/if}
@@ -50,7 +52,7 @@
 {/footer_script}
 
 {if $comment_add.ACTIVATE_RATING}
-  {combine_script id='jquery.raty' path=$GUESTBOOK_PATH|cat:'template/jquery.raty/jquery.raty.min.js'}
+  {combine_script id='jquery.raty' load='footer' path=$GUESTBOOK_PATH|cat:'template/jquery.raty/jquery.raty.min.js'}
   {footer_script}
   jQuery('#comment_rate').raty({ldelim}
     path: '{$ROOT_URL}{$GUESTBOOK_PATH}template/jquery.raty/',
