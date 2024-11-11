@@ -1,4 +1,4 @@
 File automatically created from SVN or Git repository.
 
 URL: https://github.com/Piwigo/Piwigo-Guest-Book 
-Revision: f3318691beb383c33c621102f0f030f511a61289 (Wed Dec 15 13:49:14 2021 +0100)
+Revision: 3ce31eb475090c7e93a3dd9901630627eb4058c0 (Thu May 16 09:50:50 2024 +0200)
