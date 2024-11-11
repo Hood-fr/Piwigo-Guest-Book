@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: GuestBook
-Version: 1.4.0
+Version: 14.a
 Description: Add a guestbook to the gallery
 Plugin URI: http://piwigo.org/ext/extension_view.php?eid=609
 Author: Mistic
